@@ -1,44 +1,44 @@
 # instagram_downloader
-A simple bash script to do download instagram pictures
 
-works as the following: 
+Scripts written in shell and python to download public pictures, videos and albums from Instagram.
 
-```
-./instagram_download.sh link-to-picture 
-```
-e.g.
-```
-./instagram_download.sh https://www.instagram.com/p/BiN2m6Bj-F2/
-```
-## 10.03.2017
+## Features
+- Download single pictures, videos or albums using the shell scripts (also see "Usage")
+- Download multiple pictures, videos or albums by providing a txt file with links to the python scripts
+- Filter private links from your txt files, so you can download them manually
 
-added a python script for using with a txt-file having multiple links to download several pictures at once
+## Usage
 
-## 29.04.2018
+- ### Picture download:
+  - single pictures:
+  ```shell
+  ./instagram_download.sh link-to-picture
+  ```
+  - multiple pictures:
+  ```shell
+  ./grab.py sample-link-file.txt
+  ```
+- ### Video download:
+  - single videos:
+  ```shell
+  ./instagram_video_download.sh link-to-video
+  ```
+  - multiple videos:
+  ```shell
+  ./grabVideo.py sample-link-video.txt
+  ```
+- ### Album download:
+  - single albums:
+  ```shell
+  ./instagram_album_download.sh link-to-album (requires getAlbum.py in the same directory)
+  ```
+  - multiple albums:
+  ```shell
+  ./grabAlbum.py sample-link-album.txt
+  ```
+- ### Filter private links from public links for manual download:
+  ```shell
+  ./privateFilter.py links.txt
+  ```
 
-added python and bash scripts to download albums and videos
-
-## Usage:
-
-### Picture download:
-```
-./instagram_download.sh link-to-picture
-
-./grab.py sample-link-file.txt
-```
-### Video download:
-```
-./instagram_video_download.sh link-to-video
-
-./grabVideo.py sample-link-video.txt
-```
-### Album download:
-```
-./instagram_album_download.sh link-to-album (requires getAlbum.py in the same directory)
-
-./grabAlbum.py sample-link-album.txt
-```
-### Filter private links from public links for manual download:
-```
-./privateFilter.py links.txt
-```
+Example files are included!
