@@ -2,12 +2,17 @@
 
 Scripts written in shell and python to download public pictures, videos and albums from Instagram.
 
+## Requirements
+- Python (version 3 or higher) and shell! Sorry to all the Windows users!
+
 ## Features
 - Download single pictures, videos or albums using the shell scripts (also see "Usage")
 - Download multiple pictures, videos or albums by providing a txt file with links to the python scripts
 - Filter private links from your txt files, so you can download them manually
 
 ## Usage
+
+Example files are included!
 
 - ### Picture download:
   - single pictures:
@@ -40,5 +45,3 @@ Scripts written in shell and python to download public pictures, videos and albu
   ```shell
   ./privateFilter.py links.txt
   ```
-
-Example files are included!
