@@ -46,5 +46,5 @@ Example files are included!
   ./privateFilter.py links.txt
   ```
   Will create two files:
-  - public.txt: contains all public links (pass this to one of the above scripts)
-  - private.txt: contains all private links
+  - public.txt: contains all public links (pass this to one of the above scripts!)
+  - private.txt: contains all private links (download these manually!)
