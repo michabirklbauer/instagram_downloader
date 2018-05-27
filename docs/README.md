@@ -50,5 +50,5 @@ Works the same way as downloading pictures! There's no need to specifiy if a pos
 Old release can still be found in the "old"-directory!
 
 ## Download
-- Zip: [download](https://github.com/t0xic-m/instagram_downloader/archive/master.zip)
-- Tar.gz: [download](https://github.com/t0xic-m/instagram_downloader/archive/master.tar.gz)
+- ZIP: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.zip)
+- TAR.GZ: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.tar.gz)
