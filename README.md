@@ -47,4 +47,4 @@ Works the same way as downloading pictures! There's no need to specifiy if a pos
 - Not dependent on shell anymore!
 - No need to use different script and link lists for pictures/videos/albums
   
-  Old release can still be found in the "old"-directory!
+Old release can still be found in the "old"-directory!
