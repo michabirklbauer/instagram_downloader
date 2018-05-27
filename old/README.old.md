@@ -2,6 +2,8 @@
 
 Scripts written in shell and python to download public pictures, videos and albums from Instagram.
 
+Attention! This is the readme for the old version!
+
 ## Requirements
 - Python (version 3 or higher) and shell! Sorry to all the Windows users!
 
