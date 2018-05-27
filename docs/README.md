@@ -1,46 +1,39 @@
-# Instagram Download Scripts by Micha Birklbauer
+# Instagram Downloader by Micha Birklbauer
 
-Scripts written in shell and python to download public pictures, videos and albums from Instagram.
+A python script to download public pictures, videos and albums from Instagram.
 
 ## Requirements
-- Python (version 3 or higher) and shell! Sorry to all the Windows users!
+- Python (version 3 or higher)
+- Some python packages that are not included in the standard installation, especially mentioned should be:
+  - lxml
+  - requests
 
 ## Features
-- Download single pictures, videos or albums using the shell scripts (also see "Usage")
-- Download multiple pictures, videos or albums by providing a txt file with links to the python scripts
-- Filter private links from your txt files, so you can download them manually
+- Download a single picture/video/album by running the script and providing the link as input
+- Download a single picture/video/album by passing the link as a parameter to the script
+- Download multiple pictures/videos/albums by passing a file list to the script (as parameter)
+- No need to seperate pictures, videos and albums anymore, which was required in the old version
 
 ## Usage
 
-Example files are included!
+Examples:
 
-- ### Picture download:
-  - single pictures:
+- ### Download a single picture:
   ```shell
-  ./instagram_download.sh link-to-picture
+  ./instaload.py
+  Please enter an URL to an instagram post e. g. https://www.instagram.com/p/BVKTcWWhyaS/
+  https://www.instagram.com/p/BVKTcWWhyaS/
   ```
-  - multiple pictures:
+- ### Download a single picture using parameters:
   ```shell
-  ./grab.py sample-link-file.txt
+  ./instaload.py https://www.instagram.com/p/BVKTcWWhyaS/
   ```
-- ### Video download:
-  - single videos:
+- ### Download multiple pictures using a filelist (e.g. links.txt):
   ```shell
-  ./instagram_video_download.sh link-to-video
+  ./instaload.py links.txt
   ```
-  - multiple videos:
-  ```shell
-  ./grabVideo.py sample-link-video.txt
-  ```
-- ### Album download:
-  - single albums:
-  ```shell
-  ./instagram_album_download.sh link-to-album (requires getAlbum.py in the same directory)
-  ```
-  - multiple albums:
-  ```shell
-  ./grabAlbum.py sample-link-album.txt
-  ```
+- ### Download videos/albums:
+Works the same way as downloading pictures! There's no need to specifiy if a post is a picture, video or album since the script can check that itself!
 - ### Filter private links from public links for manual download:
   ```shell
   ./privateFilter.py links.txt
@@ -48,3 +41,14 @@ Example files are included!
   Will create two files:
   - public.txt: contains all public links (pass this to one of the above scripts!)
   - private.txt: contains all private links (download these manually!)
+ 
+## Changes to the old release:
+- No OS dependency anymore: Runs on all platforms that support python3
+- Not dependent on shell anymore!
+- No need to use different script and link lists for pictures/videos/albums
+  
+Old release can still be found in the "old"-directory!
+
+## Download
+- Zip: [download](https://github.com/t0xic-m/instagram_downloader/archive/master.zip)
+- Tar.gz: [download](https://github.com/t0xic-m/instagram_downloader/archive/master.tar.gz)
