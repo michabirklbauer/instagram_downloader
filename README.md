@@ -34,15 +34,15 @@ Examples:
   ./instaload.py links.txt
   ```
 - ### Download videos/albums:
-Works the same way as downloading pictures! There's no need to specifiy if a post is a picture, video or album since the script can check that itself!
+  Works the same way as downloading pictures! There's no need to specifiy if a post is a picture, video or album since the script can check that itself!
 - ### Using the GUI:
-```shell
-./gui/instaload_gui.py
-```
+  ```shell
+  ./gui/instaload_gui.py
+  ```
 - ### Filter private links from public links for manual download:
-There is no need to do that anymore, script checks automatically now and creates a private link list if it encounters any!
+  There is no need to do that anymore, script checks automatically now and creates a private link list if it encounters any!
 
-If you still want to use it (outdated):
+  If you still want to use it (outdated):
   ```shell
   ./old/privateFilter.py links.txt
   ```
