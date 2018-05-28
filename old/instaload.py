@@ -34,52 +34,19 @@ def instaload(insta_url):
 				ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1]))
 	else:
 		print("Unrecognized typename!")
-
-def is_private(link):
-	url = str(link)
-	shortcode = str(url.split("instagram.com/p/")[1]).split("/")[0]
-	if len(shortcode) > 12:
-		return True
-	else:
-		return False
 		
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		i_url = input("Please enter an URL to an instagram post e. g. https://www.instagram.com/p/BVKTcWWhyaS/ \n")
-		if is_private(i_url):
-			print("It appears you entered a link to a private post, script will try to download anyway!")
-			try:
-				instaload(i_url)
-			except:
-				print("Failed to download post! Please try manually!")
-		else:
-			instaload(i_url)
+		instaload(i_url)
 	elif len(sys.argv) == 2:
 		if os.path.isfile(sys.argv[1]):
 			with open(sys.argv[1], "r") as in_file:
 				lines = in_file.readlines()
 				in_file.close()
-			for line in lines:
-				l = line.lstrip().rstrip()
-				if is_private(l):
-					print("It appears your link list also contains links to private posts, script will try to download anyway but manually checking is advised! Private links will be filtered and appended to private.txt!")
-					try:
-						instaload(l)
-					except:
-						pass
-					with open("private.txt", "a") as p_file:
-						p_file.write(l+"\n")
-						p_file.close()
-				else:
-					instaload(l)
+				for line in lines:
+					instaload(line.lstrip().rstrip())
 		else:
-			if is_private(sys.argv[1]):
-				print("It appears you entered a link to a private post, script will try to download anyway!")
-				try:
-					instaload(sys.argv[1])
-				except:
-					print("Failed to download post! Please try manually!")
-			else:
-				instaload(sys.argv[1])
+			instaload(sys.argv[1])
 	else:
 		print("Wrong usage! Try running without parameters or read documentation!")
