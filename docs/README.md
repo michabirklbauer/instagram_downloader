@@ -61,6 +61,10 @@ Old release can still be found in the "old"-directory!
 - Picture: [Unsplash - Nicolas Ladino Silva](https://unsplash.com/photos/o2DVsV2PnHE)
 - Font: [Mightype Script](https://www.behance.net/gallery/29992721/Mightype-Script-Free-Handlettered-Font)
 
+## License
+
+[MIT License](https://github.com/t0xic-m/instagram_downloader/blob/master/LICENSE.md)
+
 ## Download
 - ZIP: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.zip)
 - TAR.GZ: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.tar.gz)
