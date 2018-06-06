@@ -51,9 +51,9 @@ Examples:
   - private.txt: contains all private links (download these manually!)
  
 ## Changes to the old release:
-- No OS dependency anymore: Runs on all platforms that support python3
+- No OS dependency anymore: Runs on all platforms that support python3!
 - Not dependent on shell anymore!
-- No need to use different script and link lists for pictures/videos/albums
+- No need to use different scripts and link lists for pictures/videos/albums!
   
 Old release can still be found in the "old"-directory!
 
