@@ -18,20 +18,20 @@ def instaload(insta_url):
 
 	if str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
 		image = tree.xpath('//meta[@property="og:image"]/@content')
-		ur.urlretrieve(str(image[0]), str(image[0]).split("/")[-1])
+		ur.urlretrieve(str(image[0]), str(image[0]).split("/")[-1].split("?")[0])
 	elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
 		video = tree.xpath('//meta[@property="og:video:secure_url"]/@content')
-		ur.urlretrieve(str(video[0]), str(video[0]).split("/")[-1])
+		ur.urlretrieve(str(video[0]), str(video[0]).split("/")[-1].split("?")[0])
 	elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphSidecar":
 		prefix = str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["shortcode"])
 		edges = json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"]
 		for edge in edges:
 			if edge["node"]["is_video"]:
 				url = str(edge["node"]["video_url"])
-				ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1]))
+				ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
 			else:
 				url = str(edge["node"]["display_url"])
-				ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1]))
+				ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
 	else:
 		print("Unrecognized typename!")
 
@@ -42,7 +42,7 @@ def is_private(link):
 		return True
 	else:
 		return False
-		
+
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		i_url = input("Please enter an URL to an instagram post e. g. https://www.instagram.com/p/BVKTcWWhyaS/ \n")
