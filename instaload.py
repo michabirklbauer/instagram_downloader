@@ -18,20 +18,36 @@ def instaload(insta_url):
 
 	if str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
 		image = tree.xpath('//meta[@property="og:image"]/@content')
-		ur.urlretrieve(str(image[0]), str(image[0]).split("/")[-1].split("?")[0])
+		try:
+			ur.urlretrieve(str(image[0]), str(image[0]).split("/")[-1].split("?")[0])
+		except:
+			error_msg = "Error in link: " + insta_url
+			print(error_msg)
 	elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
 		video = tree.xpath('//meta[@property="og:video:secure_url"]/@content')
-		ur.urlretrieve(str(video[0]), str(video[0]).split("/")[-1].split("?")[0])
+		try:
+			ur.urlretrieve(str(video[0]), str(video[0]).split("/")[-1].split("?")[0])
+		except:
+			error_msg = "Error in link: " + insta_url
+			print(error_msg)
 	elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphSidecar":
 		prefix = str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["shortcode"])
 		edges = json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"]
 		for edge in edges:
 			if edge["node"]["is_video"]:
 				url = str(edge["node"]["video_url"])
-				ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
+				try:
+					ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
+				except:
+					error_msg = "Error in link: " + insta_url
+					print(error_msg)
 			else:
 				url = str(edge["node"]["display_url"])
-				ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
+				try:
+					ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
+				except:
+					error_msg = "Error in link: " + insta_url
+					print(error_msg)
 	else:
 		print("Unrecognized typename!")
 
@@ -59,6 +75,9 @@ if __name__ == '__main__':
 			with open(sys.argv[1], "r") as in_file:
 				lines = in_file.readlines()
 				in_file.close()
+				count = int(len(lines))
+				counter = 1
+				percent = ["[--------------------]", "[#-------------------]", "[##------------------]", "[###-----------------]", "[####----------------]", "[#####---------------]", "[######--------------]", "[#######-------------]", "[########------------]", "[#########-----------]", "[##########----------]", "[###########---------]", "[############--------]", "[#############-------]", "[##############------]", "[###############-----]", "[################----]", "[#################---]", "[##################--]", "[###################-]", "[####################]"]
 			for line in lines:
 				l = line.lstrip().rstrip()
 				if is_private(l):
@@ -72,6 +91,53 @@ if __name__ == '__main__':
 						p_file.close()
 				else:
 					instaload(l)
+				status = counter/count
+				status_bar = ""
+				if status == 1:
+					status_bar = percent[20]
+				elif status > 0.95:
+					status_bar = percent[19]
+				elif status > 0.9:
+					status_bar = percent[18]
+				elif status > 0.85:
+					status_bar = percent[17]
+				elif status > 0.8:
+					status_bar = percent[16]
+				elif status > 0.75:
+					status_bar = percent[15]
+				elif status > 0.7:
+					status_bar = percent[14]
+				elif status > 0.65:
+					status_bar = percent[13]
+				elif status > 0.6:
+					status_bar = percent[12]
+				elif status > 0.55:
+					status_bar = percent[11]
+				elif status > 0.5:
+					status_bar = percent[10]
+				elif status > 0.45:
+					status_bar = percent[9]
+				elif status > 0.4:
+					status_bar = percent[8]
+				elif status > 0.35:
+					status_bar = percent[7]
+				elif status > 0.3:
+					status_bar = percent[6]
+				elif status > 0.25:
+					status_bar = percent[5]
+				elif status > 0.2:
+					status_bar = percent[4]
+				elif status > 0.15:
+					status_bar = percent[3]
+				elif status > 0.1:
+					status_bar = percent[2]
+				elif status > 0.05:
+					status_bar = percent[1]
+				else:
+					status_bar = percent[0]
+				status_msg = "Downloaded " + str(line) + "\nDownload at " + str(status*100) + "%\n" + status_bar + "\n"
+				counter = counter + 1
+				print(status_msg)
 		else:
 			if is_private(sys.argv[1]):
 				print("It appears you entered a link to a private post, script will try to download anyway!")
