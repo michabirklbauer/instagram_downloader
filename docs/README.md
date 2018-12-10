@@ -70,3 +70,8 @@ Old release can still be found in the "old"-directory!
 ## Download
 - ZIP: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.zip)
 - TAR.GZ: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.tar.gz)
+
+## Contact
+- Website: [Web](https://t0xic-m.github.io/web)
+- Website: [GitHub](https://t0xic-m.github.io/)
+- Contact: [Mail](mailto:micha.birklbauer@gmail.com)
