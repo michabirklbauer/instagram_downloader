@@ -52,7 +52,7 @@ Examples:
 
 ## The Future of this Project
 
-Instagram Watchdog (or InstaBot) was incorporated into [InstaPython - A small python package to access and deal with Instagram data!](https://github.com/t0xic-m/instapython) and will be updated and further developed there!
+Instagram Downloader (or InstaLoad) was incorporated into [InstaPython - A small python package to access and deal with Instagram data!](https://github.com/t0xic-m/instapython) and will be updated and further developed there!
  
 ## Changes to the old release:
 - No OS dependency anymore: Runs on all platforms that support python3!
