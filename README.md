@@ -49,6 +49,10 @@ Examples:
   Will create two files:
   - public.txt: contains all public links (pass this to one of the above scripts!)
   - private.txt: contains all private links (download these manually!)
+
+## The Future of this Project
+
+Instagram Watchdog (or InstaBot) was incorporated into [InstaPython - A small python package to access and deal with Instagram data!](https://github.com/t0xic-m/instapython) and will be updated and further developed there!
  
 ## Changes to the old release:
 - No OS dependency anymore: Runs on all platforms that support python3!
