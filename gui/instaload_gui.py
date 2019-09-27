@@ -4,7 +4,6 @@ from instaload import get_image, get_video, instaload, is_private
 from tkinter import filedialog
 import tkinter as tk
 import urllib.request as ur
-import requests
 import json
 import sys
 import os

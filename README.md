@@ -4,8 +4,6 @@ A python script to download public pictures, videos and albums from Instagram.
 
 ## Requirements
 - Python (version 3 or higher)
-- Some python packages that are not included in the standard installation, especially mentioned should be:
-  - requests
 
 ## Features
 - Download a single picture/video/album by running the script and providing the link as input
