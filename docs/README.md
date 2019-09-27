@@ -7,7 +7,6 @@ A python script to download public pictures, videos and albums from Instagram.
 ## Requirements
 - Python (version 3 or higher)
 - Some python packages that are not included in the standard installation, especially mentioned should be:
-  - lxml
   - requests
 
 ## Features
@@ -55,12 +54,12 @@ Examples:
 ## The Future of this Project
 
 Instagram Downloader (or InstaLoad) was incorporated into [InstaPython - A small python package to access and deal with Instagram data!](https://github.com/t0xic-m/instapython) and will be updated and further developed there!
- 
+
 ## Changes to the old release:
 - No OS dependency anymore: Runs on all platforms that support python3!
 - Not dependent on shell anymore!
 - No need to use different scripts and link lists for pictures/videos/albums!
-  
+
 Old release can still be found in the "old"-directory!
 
 ## Credits

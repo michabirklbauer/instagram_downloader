@@ -1,58 +1,132 @@
 #!/usr/bin/env python3
 
-from lxml import html
 import urllib.request as ur
 import requests
 import json
 import sys
 import os
 
-def instaload(insta_url):
-	page = requests.get(insta_url)
-	tree = html.fromstring(page.content)
-	data = tree.xpath('//body/script[@type="text/javascript"]')
+def get_image(json_data):
+	dimensions_h = int(json_data["dimensions"]["height"])
+	dimensions_w = int(json_data["dimensions"]["width"])
+	display_resources = json_data["display_resources"]
+	image = ""
+	for resource in display_resources:
+		if int(resource["config_height"])==dimensions_h and int(resource["config_width"])==dimensions_w:
+			image = str(resource["src"])
+			break
+	if image is "":
+		print("Error: Failed to extract image!")
+		return [1]
+	image_link = image.replace("\\", "")
+	try:
+		ur.urlretrieve(str(image_link), str(image_link).split("/")[-1].split("?")[0])
+		print("Successfully extracted and downloaded image!")
+		return [0, image_link]
+	except:
+		error_msg = "Error: Failed to extract image from link: " + insta_url
+		print(error_msg)
+		return [1, image_link]
 
-	json_unprocessed = data[0].text_content()
-	json_processed = str(json_unprocessed).replace("window._sharedData = ", "").rstrip(";")
-	json_data = json.loads(json_processed)
-
-	if str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
-		image = tree.xpath('//meta[@property="og:image"]/@content')
-		try:
-			ur.urlretrieve(str(image[0]), str(image[0]).split("/")[-1].split("?")[0])
-		except:
-			error_msg = "Error in link: " + insta_url
-			print(error_msg)
-	elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
-		video = tree.xpath('//meta[@property="og:video:secure_url"]/@content')
-		try:
-			ur.urlretrieve(str(video[0]), str(video[0]).split("/")[-1].split("?")[0])
-		except:
-			error_msg = "Error in link: " + insta_url
-			print(error_msg)
-	elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphSidecar":
-		prefix = str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["shortcode"])
-		edges = json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"]
-		for edge in edges:
-			if edge["node"]["is_video"]:
-				url = str(edge["node"]["video_url"])
-				try:
-					ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
-				except:
-					error_msg = "Error in link: " + insta_url
-					print(error_msg)
-			else:
-				url = str(edge["node"]["display_url"])
-				try:
-					ur.urlretrieve(url, prefix+"_"+(url.split("/")[-1].split("?")[0]))
-				except:
-					error_msg = "Error in link: " + insta_url
-					print(error_msg)
+def get_video(json_data):
+	dimensions_h = int(json_data["dimensions"]["height"])
+	dimensions_w = int(json_data["dimensions"]["width"])
+	display_resources = json_data["display_resources"]
+	image = ""
+	result = []
+	for resource in display_resources:
+		if int(resource["config_height"])==dimensions_h and int(resource["config_width"])==dimensions_w:
+			image = str(resource["src"])
+			break
+	if image == "":
+		print("Error: Failed to extract image!")
+		print("Trying to get video!")
 	else:
-		print("Unrecognized typename!")
+		image_link = image.replace("\\", "")
+		try:
+			ur.urlretrieve(str(image_link), str(image_link).split("/")[-1].split("?")[0])
+			print("Successfully extracted and downloaded image!")
+			result.append(image_link)
+		except:
+			error_msg = "Error: Failed to extract image from link: " + insta_url
+			print(error_msg)
+			print("Trying to get video!")
+			result.append("no image")
+	video = str(json_data["video_url"])
+	video_link = video.replace("\\", "")
+	try:
+		ur.urlretrieve(str(video_link), str(video_link).split("/")[-1].split("?")[0])
+		print("Successfully extracted and downloaded video!")
+		result.append(video_link)
+		result.insert(0, 0)
+		return result
+	except:
+		error_msg = "Error: Failed to extract video from link: " + insta_url
+		print(error_msg)
+		result.append(video_link)
+		result.insert(0, 1)
+		return result
 
-def is_private(link):
-	url = str(link)
+def instaload(insta_url):
+	try:
+		mode = 0
+		data = str(requests.get(insta_url).content).split("<script type=\"text/javascript\">window.__additionalDataLoaded(")[1].split(",")[1].split(");</script>")[0]
+	except IndexError:
+		try:
+			mode = 1
+			data = str(requests.get(insta_url).content).split("<script type=\"text/javascript\">window._sharedData =")[1].split(";</script>")[0]
+		except IndexError:
+			print("Error: Couldn't extract json. Exiting!")
+			quit()
+
+	data_processed = data.replace("\n", "").replace(" ", "").replace("\\\\", "\\").replace("\\'", "'")
+	try:
+		json_data = json.loads(str(data_processed))
+	except:
+		print("Error: Failed to load json data!")
+		return 1
+
+	if mode == 0:
+		if str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
+			get_image(json_data["graphql"]["shortcode_media"])
+		elif str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
+			get_video(json_data["graphql"]["shortcode_media"])
+		elif str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphSidecar":
+			prefix = str(json_data["graphql"]["shortcode_media"]["shortcode"])
+			edges = json_data["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"]
+			for edge in edges:
+				if str(edge["node"]["__typename"]) == "GraphImage":
+					get_image(edge["node"])
+				elif str(edge["node"]["__typename"]) == "GraphVideo":
+					get_video(edge["node"])
+				else:
+					print("Error: Unrecognized typename!")
+					return [1]
+		else:
+			print("Error: Unrecognized typename!")
+			return [1]
+	elif mode == 1:
+		if str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
+			get_image(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"])
+		elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
+			get_video(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"])
+		elif str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["__typename"]) == "GraphSidecar":
+			prefix = str(json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["shortcode"])
+			edges = json_data["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"]
+			for edge in edges:
+				if str(edge["node"]["__typename"]) == "GraphImage":
+					get_image(edge["node"])
+				elif str(edge["node"]["__typename"]) == "GraphVideo":
+					get_video(edge["node"])
+				else:
+					print("Error: Unrecognized typename!")
+					return [1]
+		else:
+			print("Error: Unrecognized typename!")
+			return [1]
+
+def is_private(insta_url):
+	url = str(insta_url)
 	shortcode = str(url.split("instagram.com/p/")[1]).split("/")[0]
 	if len(shortcode) > 12:
 		return True

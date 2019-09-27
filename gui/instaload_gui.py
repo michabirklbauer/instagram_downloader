@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-from instaload import instaload, is_private
+from instaload import get_image, get_video, instaload, is_private
 from tkinter import filedialog
 import tkinter as tk
-from lxml import html
 import urllib.request as ur
 import requests
 import json
