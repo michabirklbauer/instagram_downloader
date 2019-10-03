@@ -19,7 +19,7 @@ def get_image(json_data, prefix=""):
 		return [1]
 	image_link = image.replace("\\", "")
 	try:
-		file_name = prefix + str(image_link).split("/")[-1].split("?")[0]
+		file_name = prefix + "_" + str(image_link).split("/")[-1].split("?")[0]
 		ur.urlretrieve(str(image_link), file_name)
 		print("Successfully extracted and downloaded image!")
 		return [0, image_link]
@@ -44,7 +44,7 @@ def get_video(json_data, prefix=""):
 	else:
 		image_link = image.replace("\\", "")
 		try:
-			file_name = prefix + str(image_link).split("/")[-1].split("?")[0]
+			file_name = prefix + "_" + str(image_link).split("/")[-1].split("?")[0]
 			ur.urlretrieve(str(image_link), file_name)
 			print("Successfully extracted and downloaded image!")
 			result.append(image_link)
@@ -56,7 +56,7 @@ def get_video(json_data, prefix=""):
 	video = str(json_data["video_url"])
 	video_link = video.replace("\\", "")
 	try:
-		file_name = prefix + str(video_link).split("/")[-1].split("?")[0]
+		file_name = prefix + "_" + str(video_link).split("/")[-1].split("?")[0]
 		ur.urlretrieve(str(video_link), file_name)
 		print("Successfully extracted and downloaded video!")
 		result.append(video_link)
