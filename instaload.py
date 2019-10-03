@@ -5,7 +5,7 @@ import json
 import sys
 import os
 
-def get_image(json_data):
+def get_image(json_data, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
@@ -19,7 +19,8 @@ def get_image(json_data):
 		return [1]
 	image_link = image.replace("\\", "")
 	try:
-		ur.urlretrieve(str(image_link), str(image_link).split("/")[-1].split("?")[0])
+		file_name = prefix + str(image_link).split("/")[-1].split("?")[0]
+		ur.urlretrieve(str(image_link), file_name)
 		print("Successfully extracted and downloaded image!")
 		return [0, image_link]
 	except:
@@ -27,7 +28,7 @@ def get_image(json_data):
 		print(error_msg)
 		return [1, image_link]
 
-def get_video(json_data):
+def get_video(json_data, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
@@ -43,7 +44,8 @@ def get_video(json_data):
 	else:
 		image_link = image.replace("\\", "")
 		try:
-			ur.urlretrieve(str(image_link), str(image_link).split("/")[-1].split("?")[0])
+			file_name = prefix + str(image_link).split("/")[-1].split("?")[0]
+			ur.urlretrieve(str(image_link), file_name)
 			print("Successfully extracted and downloaded image!")
 			result.append(image_link)
 		except:
@@ -54,7 +56,8 @@ def get_video(json_data):
 	video = str(json_data["video_url"])
 	video_link = video.replace("\\", "")
 	try:
-		ur.urlretrieve(str(video_link), str(video_link).split("/")[-1].split("?")[0])
+		file_name = prefix + str(video_link).split("/")[-1].split("?")[0]
+		ur.urlretrieve(str(video_link), file_name)
 		print("Successfully extracted and downloaded video!")
 		result.append(video_link)
 		result.insert(0, 0)
@@ -80,15 +83,16 @@ def instaload(insta_url):
 	if str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
 		get_image(json_data["graphql"]["shortcode_media"])
 	elif str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
-		get_video(json_data["graphql"]["shortcode_media"])
+		prefix = str(json_data["graphql"]["shortcode_media"]["shortcode"])
+		get_video(json_data["graphql"]["shortcode_media"], prefix)
 	elif str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphSidecar":
 		prefix = str(json_data["graphql"]["shortcode_media"]["shortcode"])
 		edges = json_data["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"]
 		for edge in edges:
 			if str(edge["node"]["__typename"]) == "GraphImage":
-				get_image(edge["node"])
+				get_image(edge["node"], prefix)
 			elif str(edge["node"]["__typename"]) == "GraphVideo":
-				get_video(edge["node"])
+				get_video(edge["node"], prefix)
 			else:
 				print("Error: Unrecognized typename!")
 				return [1]
