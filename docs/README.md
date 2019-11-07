@@ -49,10 +49,6 @@ Examples:
   - public.txt: contains all public links (pass this to one of the above scripts!)
   - private.txt: contains all private links (download these manually!)
 
-## The Future of this Project
-
-Instagram Downloader (or InstaLoad) was incorporated into [InstaPython - A small python package to access and deal with Instagram data!](https://github.com/t0xic-m/instapython) and will be updated and further developed there!
-
 ## Changes to the old release:
 - No OS dependency anymore: Runs on all platforms that support python3!
 - Not dependent on shell anymore!
@@ -61,7 +57,7 @@ Instagram Downloader (or InstaLoad) was incorporated into [InstaPython - A small
 Old release can still be found in the "old"-directory!
 
 ## Credits
-- Picture: [Unsplash - Nicolas Ladino Silva](https://unsplash.com/photos/o2DVsV2PnHE)
+- Picture: [Unsplash - Lance Asper](https://unsplash.com/photos/3P3NHLZGCp8)
 - Font: [Mightype Script](https://www.behance.net/gallery/29992721/Mightype-Script-Free-Handlettered-Font)
 
 ## License

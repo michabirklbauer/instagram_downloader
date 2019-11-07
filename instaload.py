@@ -228,7 +228,7 @@ if __name__ == '__main__':
 					print("Failed to download post! Please try manually!")
 			else:
 				r = instaload(sys.argv[1])
-			if r == 1:
+			if r == 0:
 				print("Download successfully!")
 			else:
 				print("Unknown Error encountered: Download may have failed!")

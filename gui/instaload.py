@@ -5,7 +5,7 @@ import json
 import sys
 import os
 
-def get_image(json_data):
+def get_image(json_data, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
@@ -19,7 +19,11 @@ def get_image(json_data):
 		return [1]
 	image_link = image.replace("\\", "")
 	try:
-		ur.urlretrieve(str(image_link), str(image_link).split("/")[-1].split("?")[0])
+		if prefix == "":
+			file_name = str(image_link).split("/")[-1].split("?")[0]
+		else:
+			file_name = prefix + "_" + str(image_link).split("/")[-1].split("?")[0]
+		ur.urlretrieve(str(image_link), file_name)
 		print("Successfully extracted and downloaded image!")
 		return [0, image_link]
 	except:
@@ -27,7 +31,7 @@ def get_image(json_data):
 		print(error_msg)
 		return [1, image_link]
 
-def get_video(json_data):
+def get_video(json_data, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
@@ -43,7 +47,11 @@ def get_video(json_data):
 	else:
 		image_link = image.replace("\\", "")
 		try:
-			ur.urlretrieve(str(image_link), str(image_link).split("/")[-1].split("?")[0])
+			if prefix == "":
+				file_name = str(image_link).split("/")[-1].split("?")[0]
+			else:
+				file_name = prefix + "_" + str(image_link).split("/")[-1].split("?")[0]
+			ur.urlretrieve(str(image_link), file_name)
 			print("Successfully extracted and downloaded image!")
 			result.append(image_link)
 		except:
@@ -54,7 +62,11 @@ def get_video(json_data):
 	video = str(json_data["video_url"])
 	video_link = video.replace("\\", "")
 	try:
-		ur.urlretrieve(str(video_link), str(video_link).split("/")[-1].split("?")[0])
+		if prefix == "":
+			file_name = str(video_link).split("/")[-1].split("?")[0]
+		else:
+			file_name = prefix + "_" + str(video_link).split("/")[-1].split("?")[0]
+		ur.urlretrieve(str(video_link), file_name)
 		print("Successfully extracted and downloaded video!")
 		result.append(video_link)
 		result.insert(0, 0)
@@ -75,26 +87,39 @@ def instaload(insta_url):
 		json_data = json.loads(data)
 	except:
 		print("Error: Failed to load json data!")
-		return [1]
+		return 1
 
 	if str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
-		get_image(json_data["graphql"]["shortcode_media"])
+		r = get_image(json_data["graphql"]["shortcode_media"])
+		if r[0] == 0:
+			return 0
+		else:
+			return 1
 	elif str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
-		get_video(json_data["graphql"]["shortcode_media"])
+		prefix = str(json_data["graphql"]["shortcode_media"]["shortcode"])
+		r = get_video(json_data["graphql"]["shortcode_media"], prefix)
+		if r[0] == 0:
+			return 0
+		else:
+			return 1
 	elif str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphSidecar":
 		prefix = str(json_data["graphql"]["shortcode_media"]["shortcode"])
 		edges = json_data["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"]
+		r = 0
 		for edge in edges:
 			if str(edge["node"]["__typename"]) == "GraphImage":
-				get_image(edge["node"])
+				r_ = get_image(edge["node"], prefix)
 			elif str(edge["node"]["__typename"]) == "GraphVideo":
-				get_video(edge["node"])
+				r_ = get_video(edge["node"], prefix)
 			else:
 				print("Error: Unrecognized typename!")
-				return [1]
+				return 1
+			if r_[0] == 1:
+				r = 1
+		return r
 	else:
 		print("Error: Unrecognized typename!")
-		return [1]
+		return 1
 
 def is_private(insta_url):
 	url = str(insta_url)
@@ -110,11 +135,15 @@ if __name__ == '__main__':
 		if is_private(i_url):
 			print("It appears you entered a link to a private post, script will try to download anyway!")
 			try:
-				instaload(i_url)
+				r = instaload(i_url)
 			except:
 				print("Failed to download post! Please try manually!")
 		else:
-			instaload(i_url)
+			r = instaload(i_url)
+		if r == 0:
+			print("Download successfully!")
+		else:
+			print("Unknown Error encountered: Download may have failed!")
 	elif len(sys.argv) == 2:
 		if os.path.isfile(sys.argv[1]):
 			with open(sys.argv[1], "r") as in_file:
@@ -123,19 +152,20 @@ if __name__ == '__main__':
 				count = int(len(lines))
 				counter = 1
 				percent = ["[--------------------]", "[#-------------------]", "[##------------------]", "[###-----------------]", "[####----------------]", "[#####---------------]", "[######--------------]", "[#######-------------]", "[########------------]", "[#########-----------]", "[##########----------]", "[###########---------]", "[############--------]", "[#############-------]", "[##############------]", "[###############-----]", "[################----]", "[#################---]", "[##################--]", "[###################-]", "[####################]"]
+			r = 0
 			for line in lines:
 				l = line.lstrip().rstrip()
 				if is_private(l):
 					print("It appears your link list also contains links to private posts, script will try to download anyway but manually checking is advised! Private links will be filtered and appended to private.txt!")
 					try:
-						instaload(l)
+						r_ = instaload(l)
 					except:
 						pass
 					with open("private.txt", "a") as p_file:
 						p_file.write(l+"\n")
 						p_file.close()
 				else:
-					instaload(l)
+					r_ = instaload(l)
 				status = counter/count
 				status_bar = ""
 				if status == 1:
@@ -183,14 +213,24 @@ if __name__ == '__main__':
 				status_msg = "Downloaded " + str(line) + "\nDownload at " + str(status*100) + "%\n" + status_bar + "\n"
 				counter = counter + 1
 				print(status_msg)
+				if r_ == 1:
+					r = 1
+			if r == 0:
+				print("Downloaded all Posts successfully!")
+			else:
+				print("Unknown Error encountered: Downloads of one or more Posts may have failed!")
 		else:
 			if is_private(sys.argv[1]):
 				print("It appears you entered a link to a private post, script will try to download anyway!")
 				try:
-					instaload(sys.argv[1])
+					r = instaload(sys.argv[1])
 				except:
 					print("Failed to download post! Please try manually!")
 			else:
-				instaload(sys.argv[1])
+				r = instaload(sys.argv[1])
+			if r == 0:
+				print("Download successfully!")
+			else:
+				print("Unknown Error encountered: Download may have failed!")
 	else:
 		print("Wrong usage! Try running without parameters or read documentation!")
