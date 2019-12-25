@@ -60,7 +60,8 @@ def get_video(json_data, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
-	image = ""
+	image_src = ""
+	image_display = ""
 	result = []
 	for resource in display_resources:
 		if int(resource["config_height"])==dimensions_h and int(resource["config_width"])==dimensions_w:
