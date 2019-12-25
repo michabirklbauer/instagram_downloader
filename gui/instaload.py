@@ -9,12 +9,37 @@ def get_image(json_data, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
-	image = ""
+	image_src = ""
+	image_display = ""
 	for resource in display_resources:
 		if int(resource["config_height"])==dimensions_h and int(resource["config_width"])==dimensions_w:
-			image = str(resource["src"])
+			image_src = str(resource["src"])
 			break
-	if image is "":
+	try:
+		image_display = str(json_data["display_url"])
+	except:
+		print("Error: Failed to extract image from display_url!")
+		image_display = ""
+	if image_display == image_src:
+		image = image_display
+	else:
+		if image_src == "" and image_display != "":
+			print("Warning: image_src and image_display not the same!")
+			print("image_src is NULL")
+			print("Getting display_url!")
+			image = image_display
+		elif image_src != "" and image_display == "":
+			print("Warning: image_src and image_display not the same!")
+			print("image_display is NULL")
+			print("Getting display_resources!")
+			image = image_src
+		else:
+			print("Warning: image_src and image_display not the same!")
+			print("image_src: \n" + image_src)
+			print("image_display: \n" + image_display)
+			print("Default: Getting display_url!")
+			image = image_display
+	if image == "":
 		print("Error: Failed to extract image!")
 		return [1]
 	image_link = image.replace("\\", "")
@@ -41,6 +66,30 @@ def get_video(json_data, prefix=""):
 		if int(resource["config_height"])==dimensions_h and int(resource["config_width"])==dimensions_w:
 			image = str(resource["src"])
 			break
+	try:
+		image_display = str(json_data["display_url"])
+	except:
+		print("Error: Failed to extract image from display_url!")
+		image_display = ""
+	if image_display == image_src:
+		image = image_display
+	else:
+		if image_src == "" and image_display != "":
+			print("Warning: image_src and image_display not the same!")
+			print("image_src is NULL")
+			print("Getting display_url!")
+			image = image_display
+		elif image_src != "" and image_display == "":
+			print("Warning: image_src and image_display not the same!")
+			print("image_display is NULL")
+			print("Getting display_resources!")
+			image = image_src
+		else:
+			print("Warning: image_src and image_display not the same!")
+			print("image_src: \n" + image_src)
+			print("image_display: \n" + image_display)
+			print("Default: Getting display_url!")
+			image = image_display
 	if image == "":
 		print("Error: Failed to extract image!")
 		print("Trying to get video!")
