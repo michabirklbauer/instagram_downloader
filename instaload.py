@@ -65,7 +65,7 @@ def get_video(json_data, prefix=""):
 	result = []
 	for resource in display_resources:
 		if int(resource["config_height"])==dimensions_h and int(resource["config_width"])==dimensions_w:
-			image = str(resource["src"])
+			image_src = str(resource["src"])
 			break
 	try:
 		image_display = str(json_data["display_url"])
