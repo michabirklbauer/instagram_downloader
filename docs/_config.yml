@@ -1,7 +1,6 @@
-theme: jekyll-theme-minimal
+theme: jekyll-theme-cayman
 title: "Instagram Download Scripts by Micha Birklbauer"
 description: "Project Website for Instagram Downloader"
-logo: https://raw.githubusercontent.com/t0xic-m/t0xic-m.github.io/master/avatar.jpg
 show_downloads: "true"
 github:
   zip_url: https://github.com/t0xic-m/instagram_downloader/archive/master.zip
