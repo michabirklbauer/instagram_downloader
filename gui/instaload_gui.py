@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# INSTAGRAM DOWNLOADER GUI
+# 2021 (c) Micha Johannes Birklbauer
+# https://github.com/t0xic-m/
+# micha.birklbauer@gmail.com
+
 from instaload import instaload, get_image, get_video, is_private
 from tkinter import filedialog
 import tkinter as tk

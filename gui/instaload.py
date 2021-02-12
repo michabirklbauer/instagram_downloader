@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# INSTAGRAM DOWNLOADER
+# 2021 (c) Micha Johannes Birklbauer
+# https://github.com/t0xic-m/
+# micha.birklbauer@gmail.com
+
 import urllib.request as ur
 import json
 import sys
@@ -131,7 +136,9 @@ def get_video(json_data, prefix=""):
 def instaload(insta_url):
 
 	insta_url_api = str(insta_url).rstrip("/") + "/?__a=1"
-	data = ur.urlopen(insta_url_api).read()
+	request_header = { "User-Agent" : "Mozilla/5.0 (Windows NT 6.1; Win64; x64)" }
+	request = ur.Request(insta_url_api, headers=request_header)
+	data = ur.urlopen(request).read()
 
 	try:
 		json_data = json.loads(data)
