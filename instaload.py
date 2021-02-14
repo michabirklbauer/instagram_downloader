@@ -10,7 +10,7 @@ import json
 import sys
 import os
 
-def get_image(json_data, prefix=""):
+def get_image(json_data, insta_url, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
@@ -61,7 +61,7 @@ def get_image(json_data, prefix=""):
 		print(error_msg)
 		return [1, image_link]
 
-def get_video(json_data, prefix=""):
+def get_video(json_data, insta_url, prefix=""):
 	dimensions_h = int(json_data["dimensions"]["height"])
 	dimensions_w = int(json_data["dimensions"]["width"])
 	display_resources = json_data["display_resources"]
@@ -147,14 +147,14 @@ def instaload(insta_url):
 		return 1
 
 	if str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphImage":
-		r = get_image(json_data["graphql"]["shortcode_media"])
+		r = get_image(json_data["graphql"]["shortcode_media"], insta_url)
 		if r[0] == 0:
 			return 0
 		else:
 			return 1
 	elif str(json_data["graphql"]["shortcode_media"]["__typename"]) == "GraphVideo":
 		prefix = str(json_data["graphql"]["shortcode_media"]["shortcode"])
-		r = get_video(json_data["graphql"]["shortcode_media"], prefix)
+		r = get_video(json_data["graphql"]["shortcode_media"], insta_url, prefix)
 		if r[0] == 0:
 			return 0
 		else:
@@ -165,9 +165,9 @@ def instaload(insta_url):
 		r = 0
 		for edge in edges:
 			if str(edge["node"]["__typename"]) == "GraphImage":
-				r_ = get_image(edge["node"], prefix)
+				r_ = get_image(edge["node"], insta_url, prefix)
 			elif str(edge["node"]["__typename"]) == "GraphVideo":
-				r_ = get_video(edge["node"], prefix)
+				r_ = get_video(edge["node"], insta_url, prefix)
 			else:
 				print("Error: Unrecognized typename!")
 				return 1
@@ -206,9 +206,20 @@ if __name__ == '__main__':
 			with open(sys.argv[1], "r") as in_file:
 				lines = in_file.readlines()
 				in_file.close()
-				count = int(len(lines))
-				counter = 1
-				percent = ["[--------------------]", "[#-------------------]", "[##------------------]", "[###-----------------]", "[####----------------]", "[#####---------------]", "[######--------------]", "[#######-------------]", "[########------------]", "[#########-----------]", "[##########----------]", "[###########---------]", "[############--------]", "[#############-------]", "[##############------]", "[###############-----]", "[################----]", "[#################---]", "[##################--]", "[###################-]", "[####################]"]
+			count = int(len(lines))
+			counter = 1
+			percent = [ \
+			"[--------------------]", "[#-------------------]",
+			"[##------------------]", "[###-----------------]",
+			"[####----------------]", "[#####---------------]",
+			"[######--------------]", "[#######-------------]",
+			"[########------------]", "[#########-----------]",
+			"[##########----------]", "[###########---------]",
+			"[############--------]", "[#############-------]",
+			"[##############------]", "[###############-----]",
+			"[################----]", "[#################---]",
+			"[##################--]", "[###################-]",
+			"[####################]"]
 			r = 0
 			for line in lines:
 				l = line.lstrip().rstrip()
