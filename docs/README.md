@@ -2,10 +2,10 @@
 
 A python script to download public pictures, videos and albums from Instagram.
 
-![Screenshot](https://raw.githubusercontent.com/t0xic-m/instagram_downloader/master/docs/instaload.jpg)
+![Screenshot](https://raw.githubusercontent.com/michabirklbauer/instagram_downloader/master/docs/instaload.jpg)
 
 ## Requirements
-- Python (version 3 or higher)
+- Python (version 3.6 or higher)
 
 ## Features
 - Download a single picture/video/album by running the script and providing the link as input
@@ -54,7 +54,7 @@ Examples:
 - Not dependent on shell anymore!
 - No need to use different scripts and link lists for pictures/videos/albums!
 
-Old release can still be found in the "old"-directory!
+Old release can still be found in [v0.9.0](https://github.com/michabirklbauer/instagram_downloader/tree/v0.9.0)!
 
 ## Credits
 - Picture: [Unsplash - Lance Asper](https://unsplash.com/photos/3P3NHLZGCp8)
@@ -62,13 +62,12 @@ Old release can still be found in the "old"-directory!
 
 ## License
 
-[MIT License](https://github.com/t0xic-m/instagram_downloader/blob/master/LICENSE.md)
+[MIT License](https://github.com/michabirklbauer/instagram_downloader/blob/master/LICENSE.md)
 
 ## Download
-- ZIP: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.zip)
-- TAR.GZ: [DOWNLOAD](https://github.com/t0xic-m/instagram_downloader/archive/master.tar.gz)
+- ZIP: [DOWNLOAD](https://github.com/michabirklbauer/instagram_downloader/archive/master.zip)
+- TAR.GZ: [DOWNLOAD](https://github.com/michabirklbauer/instagram_downloader/archive/master.tar.gz)
 
 ## Contact
-- Website: [Web](https://t0xic-m.github.io/web)
-- Website: [GitHub](https://t0xic-m.github.io/)
-- Contact: [Mail](mailto:micha.birklbauer@gmail.com)
+- Website: [michabirklbauer.github.io](https://michabirklbauer.github.io/)
+- Contact: [micha.birklbauer@gmail.com](mailto:micha.birklbauer@gmail.com)
