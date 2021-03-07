@@ -2,7 +2,7 @@
 
 # INSTAGRAM DOWNLOADER GUI
 # 2021 (c) Micha Johannes Birklbauer
-# https://github.com/t0xic-m/
+# https://github.com/michabirklbauer/
 # micha.birklbauer@gmail.com
 
 from instaload import instaload, get_image, get_video, is_private
