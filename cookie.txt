@@ -1,0 +1,1 @@
+csrftoken=alphanumeric; mid=alphanumeric; ig_did=alphanumeric; ds_user_id=numeric; sessionid=alphanumeric; shbid="alphanumeric"; shbts="alphanumeric"; fbm_124024574287414=base_domain=.instagram.com; rur="alphanumeric"

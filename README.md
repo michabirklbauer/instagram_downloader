@@ -1,59 +1,46 @@
 # Instagram Downloader
 
-A python script to download public pictures, videos and albums from Instagram.
+A python script to download public (and private) pictures, videos and albums from Instagram.
 
 ## Requirements
 - Python (version 3.6 or higher)
 
 ## Features
-- Download a single picture/video/album by running the script and providing the link as input
 - Download a single picture/video/album by passing the link as a parameter to the script
 - Download multiple pictures/videos/albums by passing a file list to the script (as parameter)
-- No need to seperate pictures, videos and albums anymore, which was required in the old version
-- Graphical User Interface: Do things the easy way!
 
 ## Usage
 
 Examples:
 
-- ### Download a single picture:
+- ### Download a single post:
   ```shell
-  ./instaload.py
-  Please enter an URL to an instagram post e. g. https://www.instagram.com/p/BVKTcWWhyaS/
-  https://www.instagram.com/p/BVKTcWWhyaS/
+  ./instaload.py -url https://www.instagram.com/p/BVKTcWWhyaS/
   ```
-- ### Download a single picture using parameters:
+- ### Recommended: Download a single post with specified cookie file:
   ```shell
-  ./instaload.py https://www.instagram.com/p/BVKTcWWhyaS/
+  ./instaload.py -url https://www.instagram.com/p/BVKTcWWhyaS/ -c cookie.txt
   ```
-- ### Download multiple pictures using a filelist (e.g. links.txt):
+- ### Download multiple posts using a filelist (e.g. links.txt):
   ```shell
-  ./instaload.py links.txt
+  ./instaload.py -f links.txt
   ```
-- ### Download videos/albums:
-  Works the same way as downloading pictures! There's no need to specifiy if a post is a picture, video or album since the script can check that itself!
-- ### Using the GUI:
+- ### Recommended: Download multiple posts with specified cookie file:
   ```shell
-  ./gui/instaload_gui.py
+  ./instaload.py -f links.txt -c cookie.txt
   ```
-- ### Filter private links from public links for manual download:
-  There is no need to do that anymore, script checks automatically now and creates a private link list if it encounters any!
 
-  If you still want to use it (outdated):
-  ```shell
-  ./old/privateFilter.py links.txt
-  ```
-  Will create two files:
-  - public.txt: contains all public links (pass this to one of the above scripts!)
-  - private.txt: contains all private links (download these manually!)
+## Why specify a cookie file?
 
-## Changes to the old release:
-- No OS dependency anymore: Runs on all platforms that support python3!
-- Not dependent on shell anymore!
-- No need to use different scripts and link lists for pictures/videos/albums!
+- Instagram will not time out your API requests after downloading a few posts.
+- Access to the newer API version with higher resolution pictures.
+- Ability to download posts from private profiles that you follow.
 
-Old release can still be found in [v0.9.0](https://github.com/michabirklbauer/instagram_downloader/tree/v0.9.0)!
+## How to get your cookie file
 
-## Credits
-- Picture: [Unsplash - Lance Asper](https://unsplash.com/photos/3P3NHLZGCp8)
-- Font: [Mightype Script](https://www.behance.net/gallery/29992721/Mightype-Script-Free-Handlettered-Font)
+- Open your browser and login to Instagram.
+- Open the developer console.
+- Go to network and access the Instagram API by loading an Instagram page with postfix "?__a=1" e.g. "https://www.instagram.com/instagram/?__a=1"
+- You should see a GET request to "/instagram/?__a=1", click it and go to the request header and copy all the text that is in "Cookie" into a txt file.
+- Done!
+- (An exemplary cookie file `cookie.txt` is given for illustration purposes.)
