@@ -15,19 +15,19 @@ A python script to download public (and private) pictures, videos and albums fro
 
 Examples:
 
-- ### Download a single post:
+- Download a single post:
   ```shell
-  ./instaload.py -url https://www.instagram.com/p/BVKTcWWhyaS/
+  ./instaload.py -url https://www.instagram.com/p/B27CH9qjDFa/
   ```
-- ### Recommended: Download a single post with specified cookie file:
+- **_Recommended:_** Download a single post with specified cookie file:
   ```shell
-  ./instaload.py -url https://www.instagram.com/p/BVKTcWWhyaS/ -c cookie.txt
+  ./instaload.py -url https://www.instagram.com/p/B27CH9qjDFa/ -c cookie.txt
   ```
-- ### Download multiple posts using a filelist (e.g. links.txt):
+- Download multiple posts using a filelist (e.g. links.txt):
   ```shell
   ./instaload.py -f links.txt
   ```
-- ### Recommended: Download multiple posts with specified cookie file:
+- **_Recommended:_** Download multiple posts with specified cookie file:
   ```shell
   ./instaload.py -f links.txt -c cookie.txt
   ```
