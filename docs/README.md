@@ -4,6 +4,10 @@ A python script to download public (and private) pictures, videos and albums fro
 
 ![Screenshot](https://raw.githubusercontent.com/michabirklbauer/instagram_downloader/master/docs/instaload.jpg)
 
+## WARNING
+
+**Instagram deprecated their public API and this repository will not be maintained any longer. Programs/Scripts or parts of them do not work anymore! USE AT OWN RISK!**
+
 ## Requirements
 - Python (version 3.6 or higher)
 
